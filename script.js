@@ -2,36 +2,34 @@ const button = document.getElementById("suggestBtn");
 const input = document.getElementById("userInput");
 const resultsDiv = document.getElementById("results");
 
-const films = [
-    { title: "Manchester by the Sea", mood: "sad" },
-    { title: "In the Mood for Love", mood: "romantic" },
-    { title: "The Grand Budapest Hotel", mood: "fun" },
-    { title: "Blade Runner 2049", mood: "dark" },
-    { title: "Eternal Sunshine of the Spotless Mind", mood: "emotional" }
-];
+button.addEventListener("click", async function () {
 
-button.addEventListener("click", function () {
-
-    const userText = input.value.toLowerCase();
+    const userText = input.value;
 
     if (userText.trim() === "") {
         resultsDiv.innerHTML = "<p>Please describe what you want.</p>";
         return;
     }
 
-    const matchedFilms = films.filter(film => 
-        userText.includes(film.mood)
-    );
+    const response = await fetch("/suggest", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: userText })
+    });
 
-    if (matchedFilms.length === 0) {
-        resultsDiv.innerHTML = "<p>No exact match found. Try different words.</p>";
+    const data = await response.json();
+
+    if (data.films.length === 0) {
+        resultsDiv.innerHTML = "<p>No exact match found.</p>";
         return;
     }
 
     resultsDiv.innerHTML = `
         <h3>Suggested Films:</h3>
         <ul>
-            ${matchedFilms.map(film => `<li>${film.title}</li>`).join("")}
+            ${data.films.map(film => `<li>${film.title}</li>`).join("")}
         </ul>
     `;
 });
