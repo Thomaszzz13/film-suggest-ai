@@ -11,8 +11,30 @@
     <div class="container" id="container">
         <h1>Random Film Suggest 🎬</h1>
 
-        <input id="userInput" type="text" placeholder="Describe your mood...">
-        <button id="suggestBtn">Suggest</button>
+        <div class="filters">
+
+            <select id="genreSelect">
+                <option value="">Select Genre</option>
+                <option value="28">Action</option>
+                <option value="35">Comedy</option>
+                <option value="18">Drama</option>
+                <option value="27">Horror</option>
+                <option value="10749">Romance</option>
+                <option value="878">Sci-Fi</option>
+                <option value="53">Thriller</option>
+                <option value="80">Crime</option>
+            </select>
+
+            <select id="ratingSelect">
+                <option value="0">Any Rating</option>
+                <option value="6">6+</option>
+                <option value="7">7+</option>
+                <option value="8">8+</option>
+            </select>
+
+            <button id="suggestBtn">Suggest</button>
+
+        </div>
 
         <div class="results" id="results">
             <p>Your film suggestions will appear here.</p>

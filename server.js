@@ -13,82 +13,47 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
 app.post("/suggest", async (req, res) => {
     try {
-        const userText = req.body.text.toLowerCase();
-        const words = userText.split(" ");
+        const { genre, rating } = req.body;
 
-        // Basic genre detection
-        const genreMap = {
-            action: 28,
-            comedy: 35,
-            romantic: 10749,
-            love: 10749,
-            drama: 18,
-            sad: 18,
-            horror: 27,
-            thriller: 53,
-            crime: 80,
-            sci: 878,
-            war: 10752
-        };
+        const minRating = rating && rating !== "0" ? rating : 7;
 
-        let detectedGenres = [];
+        // Choose 3 random pages
+        const randomPages = Array.from({ length: 3 }, () =>
+            Math.floor(Math.random() * 20) + 1
+        );
 
-        for (let word of words) {
-            if (genreMap[word]) {
-                detectedGenres.push(genreMap[word]);
-            }
+        let allMovies = [];
+
+        for (let page of randomPages) {
+            const response = await axios.get(
+                "https://api.themoviedb.org/3/discover/movie",
+                {
+                    params: {
+                        api_key: TMDB_API_KEY,
+                        with_genres: genre || undefined,
+                        sort_by: "popularity.desc",
+                        "vote_average.gte": minRating,
+                        "vote_count.gte": 300,
+                        page: page
+                    }
+                }
+            );
+
+            allMovies = allMovies.concat(response.data.results);
         }
 
-        const genreQuery = detectedGenres.join(",");
+        // Remove duplicates
+        const uniqueMovies = Array.from(
+            new Map(allMovies.map(movie => [movie.id, movie])).values()
+        );
 
-// Fetch larger pool with stricter quality filters
-const response = await axios.get(
-    "https://api.themoviedb.org/3/discover/movie",
-    {
-        params: {
-            api_key: TMDB_API_KEY,
-            with_genres: genreQuery || undefined,
-            sort_by: "vote_average.desc",
-            "vote_count.gte": 500,
-            page: 1
-        }
-    }
-);
+        // Shuffle
+        const shuffled = uniqueMovies.sort(() => 0.5 - Math.random());
 
-let movies = response.data.results.slice(0, 40);
+        // Take top 5
+        const selected = shuffled.slice(0, 5);
 
-// Scoring system
-const scoredMovies = movies.map(movie => {
-    let score = 0;
-
-    // Require all detected genres
-    const genreMatchCount = movie.genre_ids.filter(id =>
-        detectedGenres.includes(id)
-    ).length;
-
-    score += genreMatchCount * 5;
-
-    // Strong keyword matching
-    const overview = movie.overview.toLowerCase();
-
-    for (let word of words) {
-        if (overview.includes(word)) {
-            score += 4;
-        }
-    }
-
-    // Rating weight stronger
-    score += movie.vote_average;
-
-    return { ...movie, score };
-});
-
-        // Sort by score
-        scoredMovies.sort((a, b) => b.score - a.score);
-
-        const topMovies = scoredMovies.slice(0, 5);
-
-        res.json({ films: topMovies });
+        res.json({ films: selected });
 
     } catch (error) {
         console.error(error.message);
