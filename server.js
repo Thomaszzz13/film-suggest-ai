@@ -4,12 +4,16 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
+
+app.get("/health", (req, res) => {
+    res.status(200).send("OK");
+});
 
 app.post("/suggest", async (req, res) => {
     try {
@@ -56,7 +60,7 @@ app.post("/suggest", async (req, res) => {
         res.json({ films: selected });
 
     } catch (error) {
-        console.error(error.message);
+        console.error("API Error:", error.response?.data || error.message);
         res.status(500).json({ error: "Something went wrong" });
     }
 });
