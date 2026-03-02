@@ -1,13 +1,17 @@
-/* ===== GLOBAL ===== */
+/* ===============================
+   GLOBAL
+================================= */
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #1e1e2f, #12121a);
     color: white;
 }
 
-/* ===== MAIN CONTAINER ===== */
+/* ===============================
+   CONTAINER
+================================= */
 
 .container {
     width: 90%;
@@ -15,14 +19,38 @@ body {
     margin: 50px auto;
 }
 
-h1 {
+/* ===============================
+   HEADER
+================================= */
+
+.site-header {
     text-align: center;
-    margin-bottom: 30px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    margin-bottom: 40px;
 }
 
-/* ===== FILTER SECTION ===== */
+.logo {
+    width: 180px;
+    display: block;
+    margin: 0 auto 15px;
+}
+
+.site-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 42px;
+    letter-spacing: 6px;
+    margin: 10px 0 5px;
+}
+
+.tagline {
+    font-size: 14px;
+    opacity: 0.6;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ===============================
+   FILTERS
+================================= */
 
 .filters {
     display: flex;
@@ -56,21 +84,30 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* ===== RESULTS SECTION ===== */
+/* ===============================
+   RESULTS
+================================= */
 
 .results {
     margin-top: 20px;
 }
 
-/* ===== MOVIE GRID ===== */
+/* ===============================
+   MOVIE GRID
+   Always 5 cards on desktop
+================================= */
 
 .movie-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* ===== MOVIE CARD ===== */
+/* ===============================
+   MOVIE CARD
+================================= */
 
 .movie-card {
     background-color: #1f1f2e;
@@ -80,11 +117,13 @@ button:hover {
 }
 
 .movie-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* ===== POSTER ===== */
+/* ===============================
+   POSTER
+================================= */
 
 .poster-container {
     position: relative;
@@ -92,17 +131,19 @@ button:hover {
 
 .poster-container img {
     width: 100%;
-    height: 300px;
+    height: 320px;
     object-fit: cover;
     display: block;
 }
 
-/* ===== OVERLAY ===== */
+/* ===============================
+   OVERLAY
+================================= */
 
 .overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.92);
     color: white;
     padding: 15px;
     opacity: 0;
@@ -116,10 +157,12 @@ button:hover {
     opacity: 1;
 }
 
-/* ===== MOVIE INFO ===== */
+/* ===============================
+   MOVIE INFO
+================================= */
 
 .movie-info {
-    padding: 12px;
+    padding: 14px;
     text-align: center;
 }
 
@@ -134,26 +177,71 @@ button:hover {
     opacity: 0.8;
 }
 
-/* ===== HEADER ===== */
+/* ===============================
+   TABLET
+================================= */
 
-.site-header {
-    text-align: center;
-    margin-bottom: 40px;
+@media (max-width: 1024px) {
+    .movie-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-.logo {
-    width: 120px;
-    margin-bottom: 10px;
+/* ===============================
+   MOBILE
+================================= */
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95%;
+        margin: 30px auto;
+    }
+
+    .site-header h1 {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+
+    .logo {
+        width: 140px;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    select, button {
+        width: 100%;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .poster-container img {
+        height: 240px;
+    }
+
+    .overlay {
+        font-size: 12px;
+    }
 }
 
-.site-header h1 {
-    font-size: 32px;
-    margin: 5px 0;
-    letter-spacing: 3px;
-}
+@media (max-width: 480px) {
 
-.tagline {
-    font-size: 14px;
-    opacity: 0.7;
-    letter-spacing: 1px;
+    .site-header h1 {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    .logo {
+        width: 110px;
+    }
+
+    .poster-container img {
+        height: 200px;
+    }
 }
