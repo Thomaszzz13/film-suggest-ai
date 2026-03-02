@@ -133,3 +133,27 @@ button:hover {
     font-size: 13px;
     opacity: 0.8;
 }
+
+/* ===== HEADER ===== */
+
+.site-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+.site-header h1 {
+    font-size: 32px;
+    margin: 5px 0;
+    letter-spacing: 3px;
+}
+
+.tagline {
+    font-size: 14px;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}

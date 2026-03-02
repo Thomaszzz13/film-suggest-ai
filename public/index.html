@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Film Suggest</title>
+    <title>RFS - Random Film Suggest</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/assets/logo.png">
 </head>
 <body>
     
     <div class="container" id="container">
-        <h1>Random Film Suggest 🎬</h1>
+        <header class="site-header">
+            <img src="/assets/logo.png" alt="RFS Logo" class="logo">
+            <h1>Random Film Suggest</h1>
+        </header>
 
         <div class="filters">
 
             <select id="genreSelect">
-                <option value="">Select Genre</option>
+                <option value="">Any Genre</option>
                 <option value="28">Action</option>
                 <option value="35">Comedy</option>
                 <option value="18">Drama</option>
@@ -37,7 +41,7 @@
         </div>
 
         <div class="results" id="results">
-            <p>Your film suggestions will appear here.</p>
+            
         </div>
     </div>
 
